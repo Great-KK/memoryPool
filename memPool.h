@@ -18,7 +18,7 @@ namespace mempool {
 
     // pool
     typedef struct memPool {
-        int pBlock;
+        void* pBlock;
         int nUnitSize;
         int nInitSize;
         int nGrowSize;
