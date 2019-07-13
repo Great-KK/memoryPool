@@ -1,31 +1,54 @@
-#include <vector>
+#pragma once
+
 using namespace std;
 
 namespace mempool {
-    // chunk
-    typedef struct memUnit {
-        int nNext;
+    
+    // block 
+    // bidirectional // not circle
+    class memBlock {
+    public:
+        memBlock();
+        ~memBlock(); 
+
+    public:
+        memBlock* pPrev;
+        memBlock* pNext;
         void* pData;
     };
 
-    // block
-    typedef struct memBlock {
-        int nSize;
-        int nFree;
-        int nFirst;
-        void* pNext;
+    // list
+    // unidirectional
+    class memList {
+    public:
+        memList();
+        ~memList();
+
+    public:
+        memBlock* freeB;
+        memBlock* usedB;
+        int size;
+        memList* next;
     };
-
-    // pool
-    typedef struct memPool {
-        void* pBlock;
-        int nUnitSize;
-        int nInitSize;
-        int nGrowSize;
-    };
-
-
     
+    // pool
+    class memPool {
+    public:
+        memPool();
+        ~memPool();
+
+        void memPoolCreate();
+
+        void* memPoolMalloc();
+        void memPoolFree();
+
+    private:
+        memList* pList;
+    };
+
+
+
+
 
 
 
